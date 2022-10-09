@@ -2,7 +2,8 @@ from aiogram import Bot, Dispatcher, executor, types
 import os
 
 import db
-from db import add_user
+import keyboards
+import keyboards as kb
 
 TOKEN = os.environ['token']
 print(TOKEN)
@@ -13,10 +14,16 @@ dp = Dispatcher(bot)
 users = {}
 
 
+@dp.message_handler(content_types=['contact','location'])
+async def ph(message: types.Message):
+    print('--')
+    print(message)
+
+
 @dp.message_handler()
 async def echo(message: types.Message):
     print(message)
-    print(message.from_user.id, ' - ', message.from_user.first_name, ' - ', message.text)
+    # print(message.from_user.id, ' - ', message.from_user.first_name, ' - ', message.text)
     user = {
         'id_telegram': message.from_user.id,
         'username': message.from_user.username,
@@ -25,13 +32,16 @@ async def echo(message: types.Message):
     if len(db.get_user(message.from_user.id)) == 0:
         db.add_user(user)
     users.update({message.from_user.id: message.from_user.first_name})
-    # await message.answer(message.text)
+    # keyboard = kb.keyboard_menu
+    keyboard = kb.get_kbrd()
+    await message.answer(message.text, reply_markup=keyboard)
     # await message.reply(message.text)
-    text = f'Пользователь {message.from_user.first_name} написал {message.text}'
-    for i in users.keys():
-        if i != message.from_user.id:
-            await bot.send_message(chat_id=i,
-                                   text=text)
+
+    # text = f'Пользователь {message.from_user.first_name} написал {message.text}'
+    # for i in users.keys():
+    #     if i != message.from_user.id:
+    #         await bot.send_message(chat_id=i,
+    #                                text=text)
 
 
 if __name__ == '__main__':

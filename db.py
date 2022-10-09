@@ -48,6 +48,15 @@ def get_user(id_telegram: int):
     return data
 
 
+def get_users():
+    connect = sqlite3.connect(DATABASE_NAME)
+    cursor = connect.cursor()
+    get = f'SELECT * FROM users'
+    result = cursor.execute(get)
+    data = result.fetchall()
+    return data
+
+
 if __name__ == '__main__':
     create_table_users()
     # add_user({
