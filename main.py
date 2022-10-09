@@ -1,6 +1,9 @@
 from aiogram import Bot, Dispatcher, executor, types
 import os
 
+import db
+from db import add_user
+
 TOKEN = os.environ['token']
 print(TOKEN)
 bot = Bot(token=TOKEN)
@@ -12,7 +15,15 @@ users = {}
 
 @dp.message_handler()
 async def echo(message: types.Message):
+    print(message)
     print(message.from_user.id, ' - ', message.from_user.first_name, ' - ', message.text)
+    user = {
+        'id_telegram': message.from_user.id,
+        'username': message.from_user.username,
+        'name': message.from_user.first_name
+    }
+    if len(db.get_user(message.from_user.id)) == 0:
+        db.add_user(user)
     users.update({message.from_user.id: message.from_user.first_name})
     # await message.answer(message.text)
     # await message.reply(message.text)
