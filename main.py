@@ -14,7 +14,7 @@ dp = Dispatcher(bot)
 users = {}
 
 
-@dp.message_handler(content_types=['contact','location'])
+@dp.message_handler(content_types=['contact', 'location'])
 async def ph(message: types.Message):
     print('--')
     print(message)
@@ -33,7 +33,12 @@ async def echo(message: types.Message):
         db.add_user(user)
     users.update({message.from_user.id: message.from_user.first_name})
     # keyboard = kb.keyboard_menu
-    keyboard = kb.get_kbrd()
+    if message.text == 'Инлайн клавиатура':
+        keyboard = kb.inline_keyboard()
+    else:
+        keyboard = kb.get_kbrd()
+        keyboard.add(types.KeyboardButton('Инлайн клавиатура'))
+
     await message.answer(message.text, reply_markup=keyboard)
     # await message.reply(message.text)
 
@@ -42,6 +47,13 @@ async def echo(message: types.Message):
     #     if i != message.from_user.id:
     #         await bot.send_message(chat_id=i,
     #                                text=text)
+
+
+@dp.callback_query_handler()
+async def call_echo(callback_q: types.CallbackQuery):
+    print(callback_q)
+    await bot.answer_callback_query(callback_q.id)
+    await bot.send_message(chat_id=callback_q.from_user.id, text=callback_q.data)
 
 
 if __name__ == '__main__':

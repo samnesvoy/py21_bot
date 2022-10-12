@@ -1,4 +1,5 @@
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from db import get_users
 
 btn1 = KeyboardButton('some text')
@@ -26,3 +27,16 @@ def get_kbrd():
         KeyboardButton('Телефон', request_contact=True),
         KeyboardButton('Где ты', request_location=True))
     return menu
+
+
+def inline_keyboard():
+    v = {'name': 'petrucho', 'age': 13}
+    btn = InlineKeyboardButton(text='Кнопка', callback_data='button')
+    btn1 = InlineKeyboardButton(text='Кнопка1', callback_data='button1')
+    btn2 = InlineKeyboardButton(text='Кнопка2', callback_data='button2')
+    btn3 = InlineKeyboardButton(text='Кнопка3', callback_data='button3')
+    btn4 = InlineKeyboardButton(text='Кнопка4', callback_data='button4')
+    btn5 = InlineKeyboardButton(text='Кнопка5', callback_data=str(v))
+    btn6 = InlineKeyboardButton(text='Кнопка6', callback_data='button6')
+    kbrd = InlineKeyboardMarkup().add(btn, btn1, btn2, btn3, btn4, btn5, btn6)
+    return kbrd
