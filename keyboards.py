@@ -40,3 +40,37 @@ def inline_keyboard():
     btn6 = InlineKeyboardButton(text='Кнопка6', callback_data='button6')
     kbrd = InlineKeyboardMarkup().add(btn, btn1, btn2, btn3, btn4, btn5, btn6)
     return kbrd
+
+
+def kbrd_cat():
+    menu = ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+    menu.row(
+        KeyboardButton('Category 1'),
+        KeyboardButton('Category 2'))
+    return menu
+
+
+def kbrd_subcat():
+    menu = ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+    menu.row(
+        KeyboardButton('Subcategory 1'),
+        KeyboardButton('Subcategory 2'))
+    return menu
+
+
+def kbrd_prod():
+    menu = ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+    menu.row(
+        KeyboardButton('Product 1'),
+        KeyboardButton('Product 2'))
+    return menu
+
+
+def calc():
+    menu = ReplyKeyboardMarkup(resize_keyboard=True)
+    menu.row(
+        KeyboardButton('X'),
+        KeyboardButton('Operation'),
+        KeyboardButton('Y'),
+    )
+    return menu
