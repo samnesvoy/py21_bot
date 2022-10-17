@@ -11,9 +11,9 @@ keyboard_test.add(btn1)
 keyboard_test.row(btn1, btn2, btn1)
 keyboard_test.row(btn1)
 keyboard_test.add(btn1, btn1, btn2)
+import main
 
 menu = ['pizza', 'суши', "колбаса", "торт", "еще что нибудь"]
-
 keyboard_menu = ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
 for i in menu:
     keyboard_menu.insert(i)
@@ -74,3 +74,12 @@ def calc():
         KeyboardButton('Y'),
     )
     return menu
+
+# def calc(data: dict):
+#     menu = ReplyKeyboardMarkup(resize_keyboard=True)
+#     menu.row(
+#         KeyboardButton(data['x']),
+#         KeyboardButton(data['op']),
+#         KeyboardButton(data['y']),
+#     )
+#     return menu
